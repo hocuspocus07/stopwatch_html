@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="stopwatch.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Honk&family=Mukta:wght@200;300;400;500;600;700;800&family=Sixtyfour&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="stopwatch">
+        <div id="mainpart">
+            <span class="elements" id="mins"></span> :
+            <span class="elements" id="secs"></span> :
+            <span class="elements" id="millisecs"></span>
+        </div>
+        <div id="secpart">
+            <button class="btn" onclick="stahp()">START/STOP</button>
+            <button class="btn" onclick="reset()">RESET</button>
+        </div>
+        <div id="history">
+
+        </div>
+    </div>
+    <script>
+        let mins = 0;
+        let secs = 0;
+        let millisecs = 0;
+        let order, run = true;
+        let historylist = [];
+        function stopwatch() {
+            document.getElementById('secs').innerHTML = secs;
+            document.getElementById('millisecs').innerHTML = millisecs;
+            document.getElementById('mins').innerHTML = mins;
+            millisecs++;
+            if (millisecs >= 100) {
+                millisecs = 0;
+                secs++;
+            }
+            if (secs >= 60) {
+                secs = 0;
+                mins++;
+            }
+        }
+        
+        function stopit() {
+            run = false;
+            clearInterval(order);
+        }
+        function runit() {
+            run = true;
+            order = setInterval(stopwatch, 10);
+        }
+        function stahp() {
+            if (!run) {
+                runit();
+            }
+            else {
+                stopit();
+            }
+        }
+        function reset() {
+            mins = 0;
+            secs = 0;
+            millisecs = 0;
+            clearInterval(order);
+            run = false;
+            document.getElementById('secs').innerHTML = secs;
+            document.getElementById('millisecs').innerHTML = millisecs;
+            document.getElementById('mins').innerHTML = mins;
+        }
+        order = setInterval(stopwatch, 10);
+    </script>
+</body>
+
+</html>
